@@ -1,0 +1,33 @@
+.playpause {
+  .button {
+    width: 14px;
+    height: 16px;
+    background: #f0f0f0;
+    transition: clip-path 0.2s ease-in-out;
+    clip-path: polygon(
+      0 0,
+      50% 25%,
+      50% 75%,
+      50% 75%,
+      50% 25%,
+      100% 50%,
+      100% 50%,
+      0 100%
+    );
+  }
+
+  &.playing {
+    .button {
+      clip-path: polygon(
+        0 0,
+        40% 0,
+        40% 100%,
+        60% 100%,
+        60% 0,
+        100% 0,
+        100% 100%,
+        0 100%
+      );
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.controlContainer {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 16px;
+}
+
+.playButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
