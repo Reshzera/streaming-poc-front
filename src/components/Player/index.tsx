@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import useHls from "../../hooks/useHls";
 import Control from "./Control";
 import ProgressBar from "./ProgressBar/ProgressBar";
@@ -26,6 +26,28 @@ const Player: React.FC<PlayerProps> = ({ url }) => {
     setSelectedLevel,
     setIsPlaying,
   } = useHls({ url });
+
+  useEffect(() => {
+    const container = playerContainerRef.current;
+    const video = videoRef.current;
+
+    if (!container || !video) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (container && video) {
+        const { height } = container.getBoundingClientRect();
+        video.height = height;
+        console.log("Video height set to:", height);
+      }
+    });
+
+    resizeObserver.observe(container);
+
+    // Cleanup
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [playerContainerRef, videoRef]);
 
   return (
     <div className={styles.playerContainer} ref={playerContainerRef}>

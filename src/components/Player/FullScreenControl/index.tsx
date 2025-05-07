@@ -26,13 +26,14 @@ const FullScreenControl: React.FC<FullScreenControlProps> = ({
 
   const toggleFullScreen = async () => {
     if (!playerContainerRef.current) return;
-
     try {
       if (!isFullScreen) {
         await playerContainerRef.current.requestFullscreen();
-      } else {
-        await document.exitFullscreen();
+        playerContainerRef.current.style.maxHeight = "600px";
+        return;
       }
+
+      await document.exitFullscreen();
     } catch (err) {
       console.error("Error toggling fullscreen:", err);
     }
