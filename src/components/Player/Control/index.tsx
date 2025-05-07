@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
-import styles from "./styles.module.scss";
 import Hls, { Level } from "hls.js";
+import React, { useEffect } from "react";
+import FullScreenControl from "../FullScreenControl";
 import PlayPauseIcon from "../PlayPuaseIcon";
+import QualityControl from "../QualityControl";
+import VolumeControl from "../VolumeControl";
+import styles from "./styles.module.scss";
 
 type ControlProps = {
   videoRef: React.RefObject<HTMLVideoElement | null>;
+  playerContainerRef: React.RefObject<HTMLDivElement | null>;
   hlsInstance: Hls | null;
   selectedLevel: number;
   setSelectedLevel: React.Dispatch<React.SetStateAction<number>>;
@@ -15,20 +19,14 @@ type ControlProps = {
 
 const Control: React.FC<ControlProps> = ({
   videoRef,
+  playerContainerRef,
   hlsInstance,
   selectedLevel,
   setSelectedLevel,
   isPlaying,
   setIsPlaying,
+  levels,
 }) => {
-  const handleLevelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const levelIndex = parseInt(e.target.value, 10);
-    setSelectedLevel(levelIndex);
-    if (hlsInstance) {
-      hlsInstance.currentLevel = levelIndex;
-    }
-  };
-
   const handlePlayPause = () => {
     if (!videoRef.current) return;
 
@@ -57,9 +55,22 @@ const Control: React.FC<ControlProps> = ({
 
   return (
     <div className={styles.controlContainer}>
-      <button className={styles.playButton} onClick={handlePlayPause}>
-        <PlayPauseIcon isPlaying={isPlaying} />
-      </button>
+      <div className={styles.leftControls}>
+        <button className={styles.playButton} onClick={handlePlayPause}>
+          <PlayPauseIcon isPlaying={isPlaying} />
+        </button>
+        <VolumeControl videoRef={videoRef} />
+      </div>
+
+      <div className={styles.rightControls}>
+        <QualityControl
+          hlsInstance={hlsInstance}
+          levels={levels}
+          selectedLevel={selectedLevel}
+          setSelectedLevel={setSelectedLevel}
+        />
+        <FullScreenControl playerContainerRef={playerContainerRef} />
+      </div>
     </div>
   );
 };

@@ -1,12 +1,32 @@
 .controlContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
 
-  padding: 16px;
+.leftControls,
+.rightControls {
+  display: flex;
+  align-items: center;
+}
+
+.leftControls {
+  gap: 8px;
+}
+
+.rightControls {
+  gap: 16px;
 }
 
 .playButton {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
 }

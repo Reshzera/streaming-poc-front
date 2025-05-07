@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import useHls from "../../hooks/useHls";
 import Control from "./Control";
 import ProgressBar from "./ProgressBar/ProgressBar";
@@ -9,6 +9,8 @@ type PlayerProps = {
 };
 
 const Player: React.FC<PlayerProps> = ({ url }) => {
+  const playerContainerRef = useRef<HTMLDivElement>(null);
+
   const {
     //refs
     videoRef,
@@ -26,7 +28,7 @@ const Player: React.FC<PlayerProps> = ({ url }) => {
   } = useHls({ url });
 
   return (
-    <div className={styles.playerContainer}>
+    <div className={styles.playerContainer} ref={playerContainerRef}>
       <video ref={videoRef} />
       <div className={styles.playerControl}>
         <ProgressBar
@@ -43,6 +45,7 @@ const Player: React.FC<PlayerProps> = ({ url }) => {
           setIsPlaying={setIsPlaying}
           videoRef={videoRef}
           levels={levels}
+          playerContainerRef={playerContainerRef}
         />
       </div>
     </div>
